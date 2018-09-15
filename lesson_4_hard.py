@@ -38,8 +38,15 @@ def process_user_choice(choice, person):
     if choice == 1:
         check_account(person)
     elif choice == 2:
-        count = float(input('Сумма к снятию:'))
-        print(withdraw_money(person, count))
+        try:
+            count = float(input('Сумма к снятию: '))
+            if count >= 0:
+                print(withdraw_money(person, count))
+            else:
+                print('Некорректная сумма')
+        except ValueError:
+            print('Сумма должна быть числом')
+
 
 try:
     card_number, pin_code = input('Введите номер карты и пин код через пробел:').split()
@@ -65,7 +72,7 @@ try:
                             '2. Снять деньги\n'
                             '3. Выход\n'
                             '---------------------\n'
-                            'Ваш выбор:'))
+                            'Ваш выбор: '))
             if choice == 1 or choice == 2:
                 process_user_choice(choice, person)
             elif choice == 3:
