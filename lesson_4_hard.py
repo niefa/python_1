@@ -48,23 +48,13 @@ def process_user_choice(choice, person):
             print('Сумма должна быть числом')
 
 
-try:
+def start():
     card_number, pin_code = input('Введите номер карты и пин код через пробел:').split()
-except ValueError:
-    print('Проверьте правильность ввода')
 
-try:
     card_number = int(card_number)
     pin_code = int(pin_code)
-except NameError:
-    print('Недопустимое значение номера карты или пин-кода')
-
-try:
     person = get_person_by_card(card_number)
-except NameError:
-    print('Невозможно прочесть карту')
 
-try:
     if person and is_pin_valid(person, pin_code):
         while True:
             choice = int(input('Выберите пункт:\n'
@@ -81,5 +71,8 @@ try:
                 print('Неверное значение')
     else:
         print('Номер карты или пин-код введены неверно!')
-except NameError:
-    print('В доступе отказано')
+
+try:
+    start()
+except ValueError:
+    print('Проверьте формат ввода номера карты и пин-кода')
