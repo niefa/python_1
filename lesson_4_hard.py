@@ -48,7 +48,8 @@ def process_user_choice(choice, person):
             print('Сумма должна быть числом')
 
 def start():
-    card_number, pin_code = input('Введите номер карты и пин код через пробел:').split()
+    card_number, pin_code = input('Введите номер карты '
+                                  'и пин код через пробел:').split()
 
     card_number = int(card_number)
     pin_code = int(pin_code)
