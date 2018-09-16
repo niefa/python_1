@@ -47,7 +47,6 @@ def process_user_choice(choice, person):
         except ValueError:
             print('Сумма должна быть числом')
 
-
 def start():
     card_number, pin_code = input('Введите номер карты и пин код через пробел:').split()
 
@@ -75,4 +74,4 @@ def start():
 try:
     start()
 except ValueError:
-    print('Проверьте формат ввода номера карты и пин-кода')
+    print('Проверьте формат номера карты и пин-кода')
