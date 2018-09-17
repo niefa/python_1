@@ -18,14 +18,17 @@ def get_person_by_card(card_number):
         if person['card'] == card_number:
             return person
 
+
 def is_pin_valid(person, pin_code):
     if person['pin'] == pin_code:
         return True
     else:
         return False
 
+
 def check_account(person):
     print(person['money'])
+
 
 def withdraw_money(person, money):
     if person['money'] - money >= 0:
@@ -33,6 +36,7 @@ def withdraw_money(person, money):
         return 'Вы сняли {} рублей.'.format(money)
     else:
         return 'На вашем счету недостаточно средств!'
+
 
 def process_user_choice(choice, person):
     if choice == 1:
@@ -47,32 +51,48 @@ def process_user_choice(choice, person):
         except ValueError:
             print('Сумма должна быть числом')
 
+
 def start():
-    card_number, pin_code = input('Введите номер карты '
-                                  'и пин код через пробел:').split()
+    try:
+        card_number, pin_code = input('Введите номер карты '
+                                      'и пин код через пробел:').split()
+    except ValueError:
+        print('Проверье правильность ввода')
 
-    card_number = int(card_number)
-    pin_code = int(pin_code)
-    person = get_person_by_card(card_number)
+    try:
+        card_number = int(card_number)
+    except UnboundLocalError:
+        print('Неверный формат номера карты')
 
-    if person and is_pin_valid(person, pin_code):
-        while True:
-            choice = int(input('Выберите пункт:\n'
-                            '1. Проверить баланс\n'
-                            '2. Снять деньги\n'
-                            '3. Выход\n'
-                            '---------------------\n'
-                            'Ваш выбор: '))
-            if choice == 1 or choice == 2:
-                process_user_choice(choice, person)
-            elif choice == 3:
-                break
-            else:
-                print('Неверное значение')
-    else:
-        print('Номер карты или пин-код введены неверно!')
+    try:
+        pin_code = int(pin_code)
+    except UnboundLocalError:
+        print('Неверный формат пин-кода либо пин-код отсутствует')
 
-try:
-    start()
-except ValueError:
-    print('Проверьте формат номера карты и пин-кода')
+    try:
+        person = get_person_by_card(card_number)
+    except UnboundLocalError:
+        print('Невозможно авторизоваться')
+
+    try:
+        if person and is_pin_valid(person, pin_code):
+            while True:
+                choice = int(input('Выберите пункт:\n'
+                                '1. Проверить баланс\n'
+                                '2. Снять деньги\n'
+                                '3. Выход\n'
+                                '---------------------\n'
+                                'Ваш выбор: '))
+                if choice == 1 or choice == 2:
+                    process_user_choice(choice, person)
+                elif choice == 3:
+                    break
+                else:
+                    print('Неверное значение')
+        else:
+            print('Номер карты или пин-код введены неверно!')
+    except Exception as e:
+        print('Невозможно прочесть карту')
+
+
+start()
